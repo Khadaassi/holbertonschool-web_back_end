@@ -7,6 +7,7 @@ and floats and returns their sum as a float.
 
 
 def sum_mixed_list(input_list):
+    """ Return the sum of a list of integers and floats"""
     sum = 0
     for i in input_list:
         if isinstance(i, int):

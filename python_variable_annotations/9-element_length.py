@@ -10,4 +10,5 @@ from typing import List, Tuple
 
 
 def element_length(L: List[str]) -> List[Tuple[str, int]]:
+    """Return a list of tuples where each tuple’s first element is string"""
     return [(i, len(i)) for i in L]
