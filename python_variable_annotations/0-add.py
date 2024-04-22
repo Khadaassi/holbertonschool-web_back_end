@@ -1,8 +1,6 @@
 #!/usr/bin/python3
 
-"""
-basic annotation.
-"""
+"""basic annotation."""
 
 
 def add(a: float, b: float) -> float:
