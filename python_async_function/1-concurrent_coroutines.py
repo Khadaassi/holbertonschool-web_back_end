@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
-"""
-"""
+"""spawn wait_random n times with max_delay"""
 
 import asyncio
 import random
