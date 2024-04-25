@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-
-""""""
+"""transform in new def task and return list of delay"""
 
 import asyncio
 import random
