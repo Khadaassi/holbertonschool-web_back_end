@@ -29,3 +29,13 @@ yarn-error.log*
 *.log
 *.bak
 *.swp
+
+*-main.js
+
+devcontainer.json
+
+dependabot.yml
+
+.github/workflows
+
+.devcontainer
