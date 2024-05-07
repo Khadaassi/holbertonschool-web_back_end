@@ -1,0 +1,34 @@
+# Modules npm
+/node_modules
+
+# Fichiers de verrouillage
+package-lock.json
+yarn.lock
+
+# Environnement spécifique
+.env
+
+# Fichiers de build
+/build
+/dist
+
+# Fichiers de logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Dossiers et fichiers de cache
+/.pnp
+.pnp.js
+
+# IDE spécifiques
+.idea
+.vscode
+
+# Fichiers temporaires
+*.log
+*.bak
+*.swp
+
+# Fichiers Main
+*-main.js
