@@ -5,7 +5,8 @@ Deletion-resilient hypermedia pagination
 
 import csv
 import math
-from typing import List, Dict
+from typing import Dict
+from typing import List
 
 
 class Server:
@@ -36,47 +37,29 @@ class Server:
         return self.__indexed_dataset
 
     def get_hyper_index(self, index: int = None, page_size: int = 10) -> Dict:
-        """get_hyper_index
+        """Returns a dictionary containing the following key-value pairs:
 
-        Args:
-            index (int, optional): _description_. Defaults to None.
-            page_size (int, optional): _description_. Defaults to 10.
-
-        Returns:
-            Dict: return dictionnary
+        index : current start index of the return page
+        next_index : next index to query with
+        page_size : current page size
+        data : actual page of the dataset
         """
-        # Get the total number of items in the indexed dataset
-        total_items = len(self.indexed_dataset())
+        assert isinstance(index, int) and index >= 0
+        assert isinstance(page_size, int) and page_size > 0
 
-        # Check if the specified index exists in the indexed dataset
-        if index is not None and index not in self.indexed_dataset():
-            # If the index doesn't exist, find the next available index
-            next_index = index + 1
-            while next_index < total_items and next_index not in self.indexed_dataset():
-                next_index += 1
+        dataset = self.indexed_dataset()
+        data = []
+        next_index = index + page_size
 
-            # Update the start index to the next available index
-            start_index = next_index
+        for current_index in range(index, next_index):
+            if current_index in dataset:
+                data.append(dataset[current_index])
+            else:
+                break
 
-        else:
-            # Use the provided index or start from the beginning if None
-            start_index = index if index is not None else 0
-
-        # Calculate the end index for the current page
-        end_index = min(start_index + page_size, total_items)
-
-        # Get the data for the current page
-        data = [self.indexed_dataset()[i] for i in range(start_index, end_index)]
-
-        # Calculate the next index to query with
-        next_index = end_index if end_index < total_items else None
-
-        # Construct and return the result dictionary
-        result = {
-            "index": start_index,
+        return {
+            "index": index,
             "next_index": next_index,
             "page_size": page_size,
             "data": data,
         }
-
-        return result
