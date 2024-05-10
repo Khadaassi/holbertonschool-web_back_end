@@ -10,7 +10,6 @@ export default class SkyHighBuilding extends Building {
       throw new TypeError('Floors must be a Number');
     }
 
-    //
     super(sqft);
     this._floors = floors;
   }
@@ -19,7 +18,6 @@ export default class SkyHighBuilding extends Building {
     return `Evacuate slowly the ${this._floors} floors.`;
   }
 
-  //
   get sqft() {
     return this._sqft;
   }
