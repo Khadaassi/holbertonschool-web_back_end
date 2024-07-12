@@ -1,33 +1,17 @@
 #!/usr/bin/env python3
-""" Log stats """
+"""Python script that provides some stats about Nginx logs
+stored in MongoDB"""
 from pymongo import MongoClient
 
 
 if __name__ == "__main__":
-    client = MongoClient("mongodb://127.0.0.1:27017")
-    db_nginx = client.logs.nginx
-    methods = ["GET", "POST", "PUT", "PATCH", "DELETE"]
-
-    count_logs = db_nginx.count_documents({})
-    print(f"{count_logs} logs")
-
+    client = MongoClient("mongodb://localhost")
+    db = client["logs"]
+    c = db["nginx"]  # collection
+    print(f"{c.count_documents({})} logs")
     print("Methods:")
+    methods = ["GET", "POST", "PUT", "PATCH", "DELETE"]
     for method in methods:
-        count_method = db_nginx.count_documents({"method": method})
-        print(f"\tmethod {method}: {count_method}")
-
-    check = db_nginx.count_documents({"method": "GET", "path": "/status"})
-
-    print(f"{check} status check")
-    print("IPs:")
-    ips = db_nginx.aggregate(
-        [
-            {"$group": {"_id": "$ip", "count": {"$sum": 1}}},
-            {"$sort": {"count": -1}},
-            {"$limit": 10},
-            {"$project": {"_id": 0, "ip": "$_id", "count": 1}},
-        ]
-    )
-
-    for ip in ips:
-        print(f"\t{ip.get('ip')}: {ip.get('count')}")
+        print(f"\tmethod {method}: {c.count_documents({'method': method})}")
+    msg = "status check"
+    print(f"{c.count_documents({'method': 'GET', 'path': '/status'})} {msg}")
